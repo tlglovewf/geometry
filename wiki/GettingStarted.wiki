@@ -11,7 +11,7 @@ almost every component in the GTL is a template.
 
 You should make sure that you understand how templates work in C++ before you use the GTL.
 
-
+{{{
 #include <geometry/Vec3.hpp>
 
 using namespace geo;
@@ -19,3 +19,4 @@ using namespace geo;
 Vec3<float> v(1.0f, 0.0f);
 
 cout << "Length " << v.lenght() << endl;
+}}}
