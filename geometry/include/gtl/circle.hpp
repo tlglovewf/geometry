@@ -184,9 +184,9 @@ namespace gtl
         Type	    m_radius;	//!< Circle radius
     };
 
-    typedef circle<int>    circlei; 
-    typedef circle<float>  circlef; 
-    typedef circle<double> circled;
+    typedef Circle<int>    Circlei; 
+    typedef Circle<float>  Circlef; 
+    typedef Circle<double> Circled;
 } // namespace gtl
 
 #endif
