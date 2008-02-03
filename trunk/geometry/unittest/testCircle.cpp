@@ -1,12 +1,12 @@
 #include <UnitTest.hpp>
-#include <geometry/Circle2.hpp>
+#include <gtl/circle.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestCircle2)
 {
-    Circle2f c1(Vec2f(-1.0f,-1.0f), 1.5f);
-    Circle2f c2(Vec2f( 1.0f, 1.0f), 2.0f);
+    Circlef c1(Vec2f(-1.0f,-1.0f), 1.5f);
+    Circlef c2(Vec2f( 1.0f, 1.0f), 2.0f);
 
     Vec2f p1,p2;
 
