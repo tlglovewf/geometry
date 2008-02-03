@@ -195,6 +195,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\testCircle.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\testComplex.cpp"
 				>
 			</File>
