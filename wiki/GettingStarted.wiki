@@ -1,6 +1,4 @@
-#Getting Started.
-
-= Introduction =
+= Getting Started =
 
 Add your content here.
 
