@@ -20,7 +20,7 @@ _______________________________________________________________________
 #include <limits>
 #include <vector>
 
-namespace geo
+namespace gtl
 {
 
 #if defined(min) || defined(max)
@@ -100,6 +100,6 @@ inline int nearestPowerOfTwo(int value)
 	return (int)pow(2.f,(float)vlog);
 }
 
-} // namespace geo
+} // namespace gtl
 
 #endif

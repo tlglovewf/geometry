@@ -13,9 +13,9 @@ _______________________________________________________________________
 #ifndef COMPLEX_H
 #define COMPLEX_H
 
-#include <geometry/Geometry.hpp>
+#include <gtl/gtl.hpp>
 
-namespace geo
+namespace gtl
 {
     /*!
     \class Complex Complex.hpp geometry/Complex.hpp

@@ -13,12 +13,12 @@ _______________________________________________________________________
 #ifndef QUAT_H
 #define QUAT_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Vec4.hpp>
-#include <geometry/Matrix4.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/vec4.hpp>
+#include <gtl/matrix4.hpp>
 
-namespace geo
+namespace gtl
 {
     // forward declaration	
     template<typename Type> class Matrix4;
@@ -150,9 +150,9 @@ namespace geo
         //! Reset rotation with the given axis-of-rotation and rotation angle.
         void setValue(const Vec3<Type> & a_axis, Type a_degree)
         {
-            m_data[3] = (Type)std::cos( geo::DegToRad(a_degree) / (Type)2.0);
+            m_data[3] = (Type)std::cos( gtl::DegToRad(a_degree) / (Type)2.0);
 
-            Type sineval = (Type)std::sin(geo::DegToRad(a_degree) / (Type)2.0);
+            Type sineval = (Type)std::sin(gtl::DegToRad(a_degree) / (Type)2.0);
 
             Vec3<Type> a = a_axis;
 
@@ -210,9 +210,9 @@ namespace geo
         {
             // Gainer, 1972
             // calculate trig identities
-            yaw     = geo::DegToRad(yaw)*(Type)0.5;
-            pitch   = geo::DegToRad(pitch)*(Type)0.5;
-            roll    = geo::DegToRad(roll)*(Type)0.5;
+            yaw     = gtl::DegToRad(yaw)*(Type)0.5;
+            pitch   = gtl::DegToRad(pitch)*(Type)0.5;
+            roll    = gtl::DegToRad(roll)*(Type)0.5;
 
             Type c1 = std::cos(roll);
             Type c2 = std::cos(yaw);
@@ -243,7 +243,7 @@ namespace geo
             if((m_data[3] >= -1.0) && (m_data[3] <= 1.0)){
                 a_degree = (Type)(std::acos(m_data[3])) * 2.0f;
 
-                Type scale = (Type)std::sin(geo::DegToRad(a_degree) / 2.0f);
+                Type scale = (Type)std::sin(gtl::DegToRad(a_degree) / 2.0f);
 
                 if(scale != 0.0f){
                     a_axis[0] = m_data[0] / scale;
@@ -267,9 +267,9 @@ namespace geo
             Type q32 = m_data[2]*m_data[2];
             Type q42 = m_data[3]*m_data[3];
 
-            yaw   = geo::RadToDeg(std::asin(-2.0*(m_data[0]*m_data[2]-m_data[3]*m_data[1])));
-            pitch = geo::RadToDeg(std::atan(2.0*(m_data[3]*m_data[0]+m_data[1]*m_data[2])/ (q42 - q12 - q22+ q32)));
-            roll  = geo::RadToDeg(std::atan(2.0*(m_data[0]*m_data[1]+m_data[3]*m_data[2])/ (q42 + q12 - q22- q32)));
+            yaw   = gtl::RadToDeg(std::asin(-2.0*(m_data[0]*m_data[2]-m_data[3]*m_data[1])));
+            pitch = gtl::RadToDeg(std::atan(2.0*(m_data[3]*m_data[0]+m_data[1]*m_data[2])/ (q42 - q12 - q22+ q32)));
+            roll  = gtl::RadToDeg(std::atan(2.0*(m_data[0]*m_data[1]+m_data[3]*m_data[2])/ (q42 + q12 - q22- q32)));
         }
 
         //! Return this rotation in the form of a matrix.
@@ -476,6 +476,6 @@ namespace geo
 
     typedef Quat<float>  Quatf;
     typedef Quat<double> Quatd;
-} // namespace geo
+} // namespace gtl
 
 #endif

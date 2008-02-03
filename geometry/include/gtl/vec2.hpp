@@ -13,9 +13,9 @@ _______________________________________________________________________
 #ifndef VEC2_H
 #define VEC2_H
 
-#include <geometry/Geometry.hpp>
+#include <gtl/gtl.hpp>
 
-namespace geo
+namespace gtl
 {
     /*!
     \class Vec2 Vec2.hpp geometry/Vec2.hpp
@@ -278,6 +278,6 @@ namespace geo
     typedef Vec2<int>    Vec2i; 
     typedef Vec2<float>  Vec2f; 
     typedef Vec2<double> Vec2d;
-} // namespace geo
+} // namespace gtl
 
 #endif

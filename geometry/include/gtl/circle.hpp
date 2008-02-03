@@ -10,18 +10,18 @@ _______________________________________________________________________
 _______________________________________________________________________
 */
 
-#ifndef CIRCLE2_H
-#define CIRCLE2_H
+#ifndef CIRCLE_H
+#define CIRCLE_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec2.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec2.hpp>
 
 #include <assert.h>
 
-namespace geo
+namespace gtl
 {
     /*!
-    \class Circle2 Circle2.hpp geometry/Circle2.hpp
+    \class Circle circle.hpp gtl/circle.hpp
     \brief 2 dimensional circle.
     \ingroup base
 
@@ -30,39 +30,39 @@ namespace geo
     \sa   
     */
     template<typename Type>
-    class Circle2
+    class Circle
     {
     public:
         //! The default constructor. Does nothing.
-        Circle2(){}
+        Circle(){}
 
         //! Constructs an instance with initial values from \a a_center and \a a_radius.
-        Circle2(const Vec2<Type> & a_center, Type a_radius)
+        Circle(const Vec2<Type> & a_center, Type a_radius)
         {
             setValue(a_center, a_radius);
         }
 
         //! Constructs an instance with initial values from \a a_circle.
-        Circle2(const Circle2<Type> & a_circle)
+        Circle(const Circle<Type> & a_circle)
         {
             setValue(a_circle.m_center, a_circle.m_radius);
         }
 
         //! Construct a circle from 2 Points.
-        Circle2(const Vec2<Type> & p1, const Vec2<Type> & p2)
+        Circle(const Vec2<Type> & p1, const Vec2<Type> & p2)
         {
             m_center = (p1 + p2) * 0.5f;
             m_radius = (p2 - p1).length();
         }
 
         //! Construct a circle from 3 Points. p1, p2, p3 should be co-planar.
-        Circle2(const Vec2<Type> & p1, const Vec2<Type> & p2, const Vec2<Type> & p3)
+        Circle(const Vec2<Type> & p1, const Vec2<Type> & p2, const Vec2<Type> & p3)
         {
-            assert(setValue(p1,p2,p3)&&"Circle2::Circle2(p1, p2, p3): points are colinear!");
+            assert(setValue(p1,p2,p3)&&"Circle::Circle2(p1, p2, p3): points are colinear!");
         }
 
         //! Default destructor does nothing.
-        virtual ~Circle2(){}
+        virtual ~Circle(){}
 
         //! Change the center and radius
         void setValue(const Vec2<Type> & a_center, Type a_radius)
@@ -134,7 +134,7 @@ namespace geo
         }
 
         //! Intersect with a circle, returning true if there is an intersection.
-        bool intersect(const Circle2<Type> & c, Vec2<Type> & p1, Vec2<Type> & p2) const
+        bool intersect(const Circle<Type> & c, Vec2<Type> & p1, Vec2<Type> & p2) const
         {
             // Based on code from Paul Bourke
             // http://astronomy.swin.edu.au/~pbourke
@@ -174,7 +174,7 @@ namespace geo
             return true;
         }
 
-        friend std::ostream & operator<<(std::ostream & os, const Circle2<Type> & c)
+        friend std::ostream & operator<<(std::ostream & os, const Circle<Type> & c)
         { 
             return os << c.m_center.x() << " " << c.m_center.y() << " " << c.m_radius; 
         }
@@ -184,9 +184,9 @@ namespace geo
         Type	    m_radius;	//!< Circle radius
     };
 
-    typedef Circle2<int>    Circle2i; 
-    typedef Circle2<float>  Circle2f; 
-    typedef Circle2<double> Circle2d;
-} // namespace geo
+    typedef circle<int>    circlei; 
+    typedef circle<float>  circlef; 
+    typedef circle<double> circled;
+} // namespace gtl
 
 #endif

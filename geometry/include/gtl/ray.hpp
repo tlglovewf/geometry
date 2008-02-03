@@ -13,12 +13,12 @@ _______________________________________________________________________
 #ifndef RAY_H
 #define RAY_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Plane.hpp>
-#include <geometry/Box3.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/plane.hpp>
+#include <gtl/box3.hpp>
 
-namespace geo
+namespace gtl
 {
     /*!
     \class Ray Ray.hpp geometry/Ray.hpp
@@ -217,6 +217,6 @@ namespace geo
     typedef Ray<int>    Rayi;
     typedef Ray<float>  Rayf;
     typedef Ray<double> Rayd;
-} // namespace geo
+} // namespace gtl
 
 #endif

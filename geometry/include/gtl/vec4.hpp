@@ -13,9 +13,9 @@ _______________________________________________________________________
 #ifndef VEC4_H
 #define VEC4_H
 
-#include <geometry/Geometry.hpp>
+#include <gtl/gtl.hpp>
 
-namespace geo
+namespace gtl
 {
     /*!
     \class Vec4 Vec4.hpp geometry/Vec4.hpp
@@ -334,6 +334,6 @@ namespace geo
     typedef Vec4<int>    Vec4i; 
     typedef Vec4<float>  Vec4f; 
     typedef Vec4<double> Vec4d;
-} // namespace geo
+} // namespace gtl
 
 #endif
