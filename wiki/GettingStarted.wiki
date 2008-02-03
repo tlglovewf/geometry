@@ -16,7 +16,7 @@ You should make sure that you understand how templates work in C++ before you us
 
 using namespace geo;
 
-Vec3<float> v(1.0f, 0.0f);
+Vec3<float> v(1.0f, 0.0f, 0.0f);
 
 cout << "Length " << v.lenght() << endl;
 }}}
