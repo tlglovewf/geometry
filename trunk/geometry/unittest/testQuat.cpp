@@ -1,7 +1,7 @@
 #include <UnitTest.hpp>
-#include <geometry/Quat.hpp>
+#include <gtl/quat.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestQuat)
 {

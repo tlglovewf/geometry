@@ -1,7 +1,7 @@
 #include <UnitTest.hpp>
-#include <geometry/Matrix4.hpp>
+#include <gtl/matrix4.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestMatrix4)
 {

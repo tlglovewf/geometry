@@ -1,7 +1,7 @@
 #include <UnitTest.hpp>
-#include <geometry/Complex.hpp>
+#include <gtl/complex.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestComplex)
 {

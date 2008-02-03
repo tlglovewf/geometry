@@ -1,7 +1,7 @@
 #include <UnitTest.hpp>
-#include <geometry/Vec4.hpp>
+#include <gtl/vec4.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestVec4)
 {

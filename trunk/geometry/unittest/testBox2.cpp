@@ -1,7 +1,7 @@
 #include <UnitTest.hpp>
-#include <geometry/Box2.hpp>
+#include <gtl/box2.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestBox2)
 {
