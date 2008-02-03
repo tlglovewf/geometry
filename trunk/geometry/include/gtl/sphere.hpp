@@ -13,12 +13,12 @@ _______________________________________________________________________
 #ifndef SPHERE_H
 #define SPHERE_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Box3.hpp>
-#include <geometry/Ray.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/box3.hpp>
+#include <gtl/ray.hpp>
 
-namespace geo
+namespace gtl
 {
     /*!
     \class Sphere Sphere.hpp geometry/Sphere.hpp
@@ -273,6 +273,6 @@ namespace geo
     typedef Sphere<int>    Spherei; 
     typedef Sphere<float>  Spheref; 
     typedef Sphere<double> Sphered;
-} // namespace geo
+} // namespace gtl
 
 #endif

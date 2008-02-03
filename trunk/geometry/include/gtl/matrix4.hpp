@@ -13,11 +13,11 @@ _______________________________________________________________________
 #ifndef MATRIX4_H
 #define MATRIX4_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Quat.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/quat.hpp>
 
-namespace geo
+namespace gtl
 {
     // forward declaration	
     template<typename Type> class Quat;
@@ -468,6 +468,6 @@ namespace geo
     typedef Matrix4<int>    Matrix4i;
     typedef Matrix4<float>  Matrix4f;
     typedef Matrix4<double> Matrix4d;
-} // namespace geo
+} // namespace gtl
 
 #endif

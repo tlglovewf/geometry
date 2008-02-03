@@ -12,12 +12,12 @@ _______________________________________________________________________
 #ifndef XFBOX3_H
 #define XFBOX3_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Box3.hpp>
-#include <geometry/Matrix4.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/box3.hpp>
+#include <gtl/matrix4.hpp>
 
-namespace geo
+namespace gtl
 {
     /*!
     \class XfBox3 XfBox3.hpp geometry/XfBox3.hpp
@@ -159,6 +159,6 @@ namespace geo
     typedef XfBox3<int>    XfBox3i;
     typedef XfBox3<float>  XfBox3f;
     typedef XfBox3<double> XfBox3d;
-} // namespace geo
+} // namespace gtl
 
 #endif

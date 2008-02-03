@@ -12,10 +12,10 @@ _______________________________________________________________________
 #ifndef BOX2_H
 #define BOX2_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec2.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec2.hpp>
 
-namespace geo
+namespace gtl
 {
     /*!
     \class Box2 Box2.hpp geometry/Box2.hpp
@@ -159,6 +159,6 @@ namespace geo
     typedef Box2<int>    Box2i;
     typedef Box2<float>  Box2f;
     typedef Box2<double> Box2d;
-} // namespace geo
+} // namespace gtl
 
 #endif

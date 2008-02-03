@@ -13,13 +13,13 @@ _______________________________________________________________________
 #ifndef BOX3_H
 #define BOX3_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Ray.hpp>
-#include <geometry/Plane.hpp>
-#include <geometry/Matrix4.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/ray.hpp>
+#include <gtl/plane.hpp>
+#include <gtl/matrix4.hpp>
 
-namespace geo
+namespace gtl
 {
     // forward declaration	
     template<typename Type> class Plane;
@@ -257,6 +257,6 @@ namespace geo
     typedef Box3<int>    Box3i;
     typedef Box3<float>  Box3f;
     typedef Box3<double> Box3d;
-} // namespace geo
+} // namespace gtl
 
 #endif

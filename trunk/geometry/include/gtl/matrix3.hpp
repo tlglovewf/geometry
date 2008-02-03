@@ -13,11 +13,11 @@ _______________________________________________________________________
 #ifndef MATRIX3_H
 #define MATRIX3_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Quat.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/quat.hpp>
 
-namespace geo
+namespace gtl
 {
     /*!
     \class Matrix3 Matrix3.hpp geometry/Matrix3.hpp
@@ -319,6 +319,6 @@ namespace geo
     typedef Matrix3<int>    Matrix3i;
     typedef Matrix3<float>  Matrix3f;
     typedef Matrix3<double> Matrix3d;
-} // namespace geo
+} // namespace gtl
 
 #endif

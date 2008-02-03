@@ -13,12 +13,12 @@ _______________________________________________________________________
 #ifndef PLANE_H
 #define PLANE_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Ray.hpp>
-#include <geometry/Matrix4.hpp>
+#include <gtl/gtl.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/ray.hpp>
+#include <gtl/matrix4.hpp>
 
-namespace geo
+namespace gtl
 {
     // forward declaration	
     template<typename Type> class Ray;
@@ -284,6 +284,6 @@ namespace geo
     typedef Plane<int>    Planei;
     typedef Plane<float>  Planef;
     typedef Plane<double> Planed;
-} // namespace geo
+} // namespace gtl
 
 #endif
