@@ -2,4 +2,8 @@
 
 This page provides everything you'll need to know about getting started with the geometry library.
 
-The Geometry Template Library, or GTL, is a C++ library of container classes and algorithms; it provides many of the basic algorithms and data structures of computer science. The GTL is a generic library, meaning that its components are heavily parameterized: almost every component in the GTL is a template. You should make sure that you understand how templates work in C++ before you use the GTL.
+The Geometry Template Library, or GTL, is a C++ library of container classes and algorithms; it provides many of the basic algorithms and data structures of computer science.
+The GTL is a generic library, meaning that its components are heavily parameterized:
+almost every component in the GTL is a template. 
+
+You should make sure that you understand how templates work in C++ before you use the GTL.
