@@ -12,9 +12,9 @@ almost every component in the GTL is a template.
 You should make sure that you understand how templates work in C++ before you use the GTL.
 
 {{{
-#include <geometry/Vec3.hpp>
+#include <gtl/vec3.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 Vec3<float> v(1.0f, 0.0f, 0.0f);
 
