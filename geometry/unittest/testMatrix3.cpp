@@ -1,8 +1,8 @@
 #include <UnitTest.hpp>
-#include <geometry/Matrix3.hpp>
-#include <geometry/Quat.hpp>
+#include <gtl/matrix3.hpp>
+#include <gtl/quat.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestMatrix3)
 {

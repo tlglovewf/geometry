@@ -1,7 +1,7 @@
 #include <UnitTest.hpp>
-#include <geometry/Sphere.hpp>
+#include <gtl/sphere.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestSphere)
 {

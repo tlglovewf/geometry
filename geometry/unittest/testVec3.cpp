@@ -1,7 +1,7 @@
 #include <UnitTest.hpp>
-#include <geometry/Vec3.hpp>
+#include <gtl/vec3.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestVec3)
 {

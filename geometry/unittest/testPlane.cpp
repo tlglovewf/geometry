@@ -1,7 +1,7 @@
 #include <UnitTest.hpp>
-#include <geometry/Plane.hpp>
+#include <gtl/plane.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestPlane)
 {

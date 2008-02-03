@@ -1,7 +1,7 @@
 #include <UnitTest.hpp>
-#include <geometry/Ray.hpp>
+#include <gtl/ray.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestRay)
 {

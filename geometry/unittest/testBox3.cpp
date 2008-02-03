@@ -1,8 +1,8 @@
 #include <UnitTest.hpp>
-#include <geometry/Box3.hpp>
-#include <geometry/XfBox3.hpp>
+#include <gtl/box3.hpp>
+#include <gtl/xfbox3.hpp>
 
-using namespace geo;
+using namespace gtl;
 
 RUN_UNIT_TEST(TestBox3)
 {
