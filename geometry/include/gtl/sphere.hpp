@@ -184,7 +184,7 @@ namespace gtl
             return (  d1 < d2*d2 );
         }
 
-        //! Intersect line and sphere, returning true if there is an intersection.
+        //! Intersect ray and sphere, returning true if there is an intersection.
         bool intersect(const Ray<Type> & r, Type & t0, Type & t1) const
         {
             Vec3<Type> r_to_s = r.getOrigin() - m_center;
