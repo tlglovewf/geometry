@@ -2,7 +2,7 @@
 
 This page provides everything you'll need to know about getting started with the geometry library.
 
-=Build a Simple Program Using GTL=
+=A simple program using GTL=
 
 {{{
 #include <iostream>
