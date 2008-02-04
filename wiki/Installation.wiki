@@ -1,0 +1,5 @@
+#summary One-sentence summary of this page.
+
+The first thing many people want to know is, “how do I build GTL?” The good news is that there's nothing to build.
+
+GTL libraries are header-only: they consist entirely of header files containing templates and inline functions, and require no separately-compiled library binaries or special treatment when linking.
