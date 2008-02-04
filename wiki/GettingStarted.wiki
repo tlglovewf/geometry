@@ -1,3 +1,5 @@
+#summary Let's go
+
 = Introduction =
 
 This page provides everything you'll need to know about getting started with the geometry library.
