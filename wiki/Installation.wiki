@@ -1,5 +1,5 @@
-#Chapter 1
 #summary One-sentence summary of this page.
+#labels Chapter
 
 The first thing many people want to know is, “how do I build GTL?” The good news is that there's nothing to build.
 
