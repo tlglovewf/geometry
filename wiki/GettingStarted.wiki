@@ -2,21 +2,19 @@
 
 This page provides everything you'll need to know about getting started with the geometry library.
 
-The Geometry Template Library, or GTL, is a C++ library of container classes and algorithms.
-
-It provides many of the basic algorithms and data structures of computer science.
-
-The GTL is a generic library, meaning that its components are heavily parameterized:
-almost every component in the GTL is a template. 
-
-You should make sure that you understand how templates work in C++ before you use the GTL.
-
 {{{
+#include <iostream>
+
 #include <gtl/vec3.hpp>
 
 using namespace gtl;
 
+int main(int argc, char** argv)
+{
 Vec3<float> v(1.0f, 0.0f, 0.0f);
 
-cout << "Length " << v.lenght() << endl;
+std::cout << "Length " << v.lenght() << std::endl;
+
+return 0;
+}
 }}}
