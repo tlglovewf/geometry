@@ -13,10 +13,10 @@ using namespace gtl;
 
 int main(int argc, char** argv)
 {
-Vec3<float> v(1.0f, 0.0f, 0.0f);
+    Vec3<float> v(1.0f, 0.0f, 0.0f);
 
-std::cout << "Length " << v.lenght() << std::endl;
+    std::cout << "Length " << v.lenght() << std::endl;
 
-return 0;
+    return 0;
 }
 }}}
