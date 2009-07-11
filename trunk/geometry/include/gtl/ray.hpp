@@ -3,9 +3,9 @@ _______________________________________________________________________
 __________________________ G E O M E T R Y ____________________________
 |
 | THIS FILE IS PART OF THE GEOMETRY TEMPLATE LIBRARY.
-| USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS     
+| USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS
 | GOVERNED BY A BSD-STYLE SOURCE LICENSE.
-| PLEASE READ THESE TERMS BEFORE DISTRIBUTING.       
+| PLEASE READ THESE TERMS BEFORE DISTRIBUTING.
 _______________________________________________________________________
 _______________________________________________________________________
 */
@@ -27,7 +27,7 @@ namespace gtl
 
     This class is used by many other classes.
 
-    \sa Vec3  
+    \sa Vec3
     */
     template<typename Type>
     class Ray
@@ -59,14 +59,14 @@ namespace gtl
 
         //! Return the ray origin.
         const Vec3<Type> & getOrigin() const
-        { 
-            return m_origin; 
+        {
+            return m_origin;
         }
 
         //! Return the ray normalized direction.
         const Vec3<Type> & getDirection() const
-        { 
-            return m_direction; 
+        {
+            return m_direction;
         }
 
         //! Get point on ray at t
@@ -106,9 +106,9 @@ namespace gtl
 
         /*! Intersect the ray with the given triangle defined by vert0,vert1,vert2.
         Return true if there is an intersection.
-        If there is an intersection, a vector a_tuv is returned, where t is the 
-        distance to the plane in which the triangle lies and (u,v) represents the 
-        coordinates inside the triangle. 
+        If there is an intersection, a vector a_tuv is returned, where t is the
+        distance to the plane in which the triangle lies and (u,v) represents the
+        coordinates inside the triangle.
         */
         bool intersect(const Vec3<Type> & vert0, const Vec3<Type> & vert1, const Vec3<Type> & vert2, Vec3<Type> & a_tuv) const
         {
@@ -116,20 +116,20 @@ namespace gtl
             // Fast, minimum storage ray-triangle intersection.
             // Journal of graphics tools, 2(1):21-28, 1997
 
-            // find vectors for two edges sharing vert0 
+            // find vectors for two edges sharing vert0
             Vec3<Type> edge1 = vert1 - vert0;
             Vec3<Type> edge2 = vert2 - vert0;
 
-            // begin calculating determinant - also used to calculate U parameter 
+            // begin calculating determinant - also used to calculate U parameter
             Vec3<Type> pvec = m_direction.cross(edge2);
 
-            // if determinant is near zero, ray lies in plane of triangle 
+            // if determinant is near zero, ray lies in plane of triangle
             Type det = edge1.dot(pvec);
 
             if (det < EPS)
                 return false;
 
-            // calculate distance from vert0 to ray origin 
+            // calculate distance from vert0 to ray origin
             Vec3<Type> tvec = m_origin - vert0;
 
             // calculate U parameter and test bounds
@@ -159,7 +159,18 @@ namespace gtl
             return true;
         }
 
-        //! The shortest line between two lines in 3D
+        /*! Calculate the shortest line between two lines in 3D
+          Calculate also the values of mua and mub where
+            Pa = P1 + mua (P2 - P1)
+            Pb = P3 + mub (P4 - P3)
+          Return false if no solution exists.
+
+          Two lines in 3 dimensions generally don't intersect at a point, they may
+          be parallel (no intersections) or they may be coincident (infinite intersections)
+          but most often only their projection onto a plane intersect..
+          When they don't exactly intersect at a point they can be connected by a line segment,
+          the shortest line segment is unique and is often considered to be their intersection in 3D.
+          */
         bool intersect(const Ray<Type> & a_ray, Type & mua, Type & mub) const
         {
             // Based on code from Paul Bourke
@@ -198,14 +209,14 @@ namespace gtl
 
         //! Check the two given ray for equality.
         friend bool operator ==(const Ray<Type> & r1, const Ray<Type> & r2)
-        { 
-            return(r1.m_origin == r2.m_origin && r1.m_direction == r2.m_direction); 
+        {
+            return(r1.m_origin == r2.m_origin && r1.m_direction == r2.m_direction);
         }
 
         //! Check the two given ray for inequality.
         friend bool operator !=(const Ray<Type> & r1, const Ray<Type> & r2)
-        { 
-            return !(r1 == r2); 
+        {
+            return !(r1 == r2);
         }
 
     private:
