@@ -3,9 +3,9 @@ _______________________________________________________________________
 __________________________ G E O M E T R Y ____________________________
 |
 | THIS FILE IS PART OF THE GEOMETRY TEMPLATE LIBRARY.
-| USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS     
+| USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS
 | GOVERNED BY A BSD-STYLE SOURCE LICENSE.
-| PLEASE READ THESE TERMS BEFORE DISTRIBUTING.       
+| PLEASE READ THESE TERMS BEFORE DISTRIBUTING.
 _______________________________________________________________________
 _______________________________________________________________________
 */
@@ -21,7 +21,7 @@ _______________________________________________________________________
 
 namespace gtl
 {
-    // forward declaration	
+    // forward declaration
     template<typename Type> class Plane;
     template<typename Type> class Ray;
 
@@ -63,7 +63,7 @@ namespace gtl
         //! Check if this has been marked as an empty box. \sa makeEmpty().
         bool isEmpty() const
         {
-            return (m_max[0] < m_min[0] || 
+            return (m_max[0] < m_min[0] ||
                     m_max[1] < m_min[1] ||
                     m_max[2] < m_min[2]);
         }
@@ -77,14 +77,14 @@ namespace gtl
 
         //! Returns the lower left corner of the box. \sa getCenter(), getMax().
         const Vec3<Type> & getMin() const
-        { 
-            return m_min; 
+        {
+            return m_min;
         }
 
         //! Returns the upper right corner of the box. \sa getMin().
         const Vec3<Type> & getMax() const
-        { 
-            return m_max; 
+        {
+            return m_max;
         }
 
         //! Returns width, height and depth of box.
@@ -146,7 +146,7 @@ namespace gtl
             corners[0]    = m_min;
             corners[1][0] = m_min[0]; corners[1][1] = m_max[1]; corners[1][2] = m_min[2];
             corners[2][0] = m_max[0]; corners[2][1] = m_max[1]; corners[2][2] = m_min[2];
-            corners[3][0] = m_max[0]; corners[3][1] = m_min[1]; corners[3][2] = m_min[2];            
+            corners[3][0] = m_max[0]; corners[3][1] = m_min[1]; corners[3][2] = m_min[2];
             corners[4]    = m_max;
             corners[5][0] = m_min[0]; corners[5][1] = m_max[1]; corners[5][2] = m_max[2];
             corners[6][0] = m_min[0]; corners[6][1] = m_min[1]; corners[6][2] = m_max[2];
@@ -223,11 +223,11 @@ namespace gtl
             const Vec3<Type> & pnorm = a_plane.getNormal();
 
             // Use separating axis theorem to test overlap.
-            Vec3<Type> min3( pnorm[0] > 0.0 ? m_min[0] : m_max[0],
+            Vec3<Type> vmin( pnorm[0] > 0.0 ? m_min[0] : m_max[0],
                              pnorm[1] > 0.0 ? m_min[1] : m_max[1],
                              pnorm[2] > 0.0 ? m_min[2] : m_max[2]);
 
-            Vec3<Type> max3( pnorm[0] > 0.0 ? m_max[0] : m_min[0],
+            Vec3<Type> vmax( pnorm[0] > 0.0 ? m_max[0] : m_min[0],
                              pnorm[1] > 0.0 ? m_max[1] : m_min[1],
                              pnorm[2] > 0.0 ? m_max[2] : m_min[2]);
 
@@ -239,14 +239,14 @@ namespace gtl
 
         //! Check \a b1 and \a b2 for equality.
         friend bool operator ==(const Box3<Type> & b1, const Box3<Type> & b2)
-        { 
-            return b1.getMin() == b2.getMin() && b1.getMax() == b2.getMax(); 
+        {
+            return b1.getMin() == b2.getMin() && b1.getMax() == b2.getMax();
         }
 
         //! Check \a b1 and \a b2 for inequality.
         friend bool operator !=(const Box3<Type> & b1, const Box3<Type> & b2)
-        { 
-            return !(b1 == b2); 
+        {
+            return !(b1 == b2);
         }
 
     private:
