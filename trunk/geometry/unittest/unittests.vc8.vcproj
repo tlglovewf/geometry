@@ -215,6 +215,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\testPolygon.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\testQuat.cpp"
 				>
 			</File>
