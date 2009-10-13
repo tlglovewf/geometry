@@ -118,11 +118,13 @@ namespace gtl
             return m_radius; 
         }
 
-        Type getSurface() const
+        //! Area of the circle.
+        Type getArea() const
         {
             return (Type)(M_PI * m_radius * m_radius);
         }
 
+        //! Circumference of the circle.
         Type getCircumference() const{
             return (Type)( 2.0 * M_PI * m_radius);
         }

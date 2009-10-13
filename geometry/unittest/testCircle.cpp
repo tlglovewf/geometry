@@ -15,7 +15,7 @@ RUN_UNIT_TEST(TestCircle2)
         cout << "p2: " << p2 << " ( 0.49864 -0.93614)" << endl;
     }
 
-	c1.getSurface();
+	c1.getArea();
 	c1.getCircumference();
 }
 
