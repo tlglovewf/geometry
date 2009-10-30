@@ -23,7 +23,7 @@ _______________________________________________________________________
 #ifndef RECTPRISM_H
 #define RECTPRISM_H
 
-#include <gtl/geometry.hpp>
+#include <gtl/gtl.hpp>
 #include <gtl/vec3.hpp>
 #include <gtl/ray.hpp>
 #include <gtl/polyhedron.hpp>
