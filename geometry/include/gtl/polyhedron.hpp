@@ -28,13 +28,13 @@ _______________________________________________________________________
 #include <gtl/ray.hpp>
 #include <gtl/matrix3.hpp>
 
-namespace geo
+namespace gtl
 {
 #define MIN_VERTICES 4	// minimum number of vertices required to have a polyhedron
 #define SQR(x) pow((double)x, 2.0)
 
     /*!
-    \class Polyhedron Polyhedron.hpp geometry/Polyhedron.hpp
+    \class Polyhedron Polyhedron.hpp gtl/Polyhedron.hpp
     \brief Represents a Polyhedron as a collection of 3D points
     \ingroup base
     */
@@ -143,6 +143,6 @@ namespace geo
     typedef Polyhedron<int>    Polyhedroni;
     typedef Polyhedron<float>  Polyhedronf;
     typedef Polyhedron<double> Polyhedrond;
-} // namespace geo
+} // namespace gtl
 
 #endif

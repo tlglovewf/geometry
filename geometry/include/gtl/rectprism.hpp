@@ -30,10 +30,10 @@ _______________________________________________________________________
 #include <gtl/matrix3.hpp>
 #include <vector>
 
-namespace geo
+namespace gtl
 {
     /*!
-    \class RectPrism RectPrism.hpp geometry/RectPrism.hpp
+    \class RectPrism RectPrism.hpp gtl/RectPrism.hpp
     \brief Represents a rectangular prism as a collection of 8 3D vertices
     \ingroup base
     */
@@ -45,7 +45,7 @@ namespace geo
         //! The default constructor makes a cube.
         RectPrism()
         {
-			geo::Vec3<Type> pts[8];
+			Vec3<Type> pts[8];
 
 			if (m_vertices != NULL)
 			{
@@ -298,6 +298,6 @@ namespace geo
     typedef RectPrism<int>    RectPrismi;
     typedef RectPrism<float>  RectPrismf;
     typedef RectPrism<double> RectPrismd;
-} // namespace geo
+} // namespace gtl
 
 #endif
