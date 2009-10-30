@@ -23,7 +23,7 @@ _______________________________________________________________________
 #ifndef POLYHEDRON_H
 #define POLYHEDRON_H
 
-#include <gtl/geometry.hpp>
+#include <gtl/gtl.hpp>
 #include <gtl/vec3.hpp>
 #include <gtl/ray.hpp>
 #include <gtl/matrix3.hpp>
