@@ -23,11 +23,11 @@ _______________________________________________________________________
 #ifndef RECTPRISM_H
 #define RECTPRISM_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Ray.hpp>
-#include <geometry/Polyhedron.hpp>
-#include <geometry/Matrix3.hpp>
+#include <gtl/geometry.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/ray.hpp>
+#include <gtl/polyhedron.hpp>
+#include <gtl/matrix3.hpp>
 #include <vector>
 
 namespace geo

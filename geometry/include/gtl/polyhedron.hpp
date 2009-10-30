@@ -23,10 +23,10 @@ _______________________________________________________________________
 #ifndef POLYHEDRON_H
 #define POLYHEDRON_H
 
-#include <geometry/Geometry.hpp>
-#include <geometry/Vec3.hpp>
-#include <geometry/Ray.hpp>
-#include <geometry/Matrix3.hpp>
+#include <gtl/geometry.hpp>
+#include <gtl/vec3.hpp>
+#include <gtl/ray.hpp>
+#include <gtl/matrix3.hpp>
 
 namespace geo
 {
