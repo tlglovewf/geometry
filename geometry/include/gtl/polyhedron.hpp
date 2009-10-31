@@ -31,7 +31,6 @@ _______________________________________________________________________
 namespace gtl
 {
 #define MIN_VERTICES 4	// minimum number of vertices required to have a polyhedron
-#define SQR(x) pow((double)x, 2.0)
 
     /*!
     \class Polyhedron Polyhedron.hpp gtl/Polyhedron.hpp
