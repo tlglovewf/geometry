@@ -22,6 +22,7 @@ _______________________________________________________________________
 
 namespace gtl
 {
+#define SQR(x) pow((double)x, 2.0)
 
 #if defined(min) || defined(max)
 #   error Error: min or max are defined as preprocessor macros, probably in <windows.h>.  Define NOMINMAX macro before including any system headers!
