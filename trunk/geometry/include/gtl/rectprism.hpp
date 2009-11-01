@@ -122,7 +122,7 @@ namespace gtl
 					{
 						Vec3<Type> vec;
 
-						vec = m_vertices[0] - m_vertices[j];
+						vec = m_vertices[j] - m_vertices[0];
 
 						if (vec.length() < min_dist[i])
 						{
@@ -171,7 +171,7 @@ namespace gtl
 			// now make sure the link_vectors[2] vector points in the right direction for our ray_k, because voxelize() will
 			// depend on that direction being the right one...
 			Vec3<Type> vec;
-			vec = m_vertices[0] - link_points[2];
+			vec = link_points[2] - m_vertices[0];
 			link_vectors[2] = vec;
 			
 			m_ray_k->setValue(m_ray_k->getOrigin(), link_vectors[2]);
