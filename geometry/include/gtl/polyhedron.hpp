@@ -2,21 +2,11 @@
 _______________________________________________________________________
 __________________________ G E O M E T R Y ____________________________
 |
-|	This program is free software; you can redistribute it and/or modify
-|   it under the terms of the GNU General Public License as published by
-|   the Free Software Foundation; either version 2 of the License, or
-|   (at your option) any later version.
-|
-|   This program is distributed in the hope that it will be useful,
-|   but WITHOUT ANY WARRANTY; without even the implied warranty of
-|   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-|   GNU General Public License for more details.
-|
-|   You should have received a copy of the GNU General Public License
-|   along with this program; if not, write to the Free Software
-|   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-|
-________________ Copyright (C) 2009 Simon Ouellette. __________________
+| THIS FILE IS PART OF THE GEOMETRY TEMPLATE LIBRARY.
+| USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS     
+| GOVERNED BY A BSD-STYLE SOURCE LICENSE.
+| PLEASE READ THESE TERMS BEFORE DISTRIBUTING.       
+_______________________________________________________________________
 _______________________________________________________________________
 */
 
@@ -72,6 +62,12 @@ namespace gtl
 		{
 			if (m_vertices != NULL)
 				delete [] m_vertices;
+		}
+
+		//! Returns the number of vertices declared for this polyhedron.
+		int getNumVertices()
+		{
+			return m_num_vertices;
 		}
 
         //! Reset the vertices describing the polyhedron (must provide more than 3 vertices)
