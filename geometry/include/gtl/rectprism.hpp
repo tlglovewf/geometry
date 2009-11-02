@@ -2,21 +2,11 @@
 _______________________________________________________________________
 __________________________ G E O M E T R Y ____________________________
 |
-|	This program is free software; you can redistribute it and/or modify
-|   it under the terms of the GNU General Public License as published by
-|   the Free Software Foundation; either version 2 of the License, or
-|   (at your option) any later version.
-|
-|   This program is distributed in the hope that it will be useful,
-|   but WITHOUT ANY WARRANTY; without even the implied warranty of
-|   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-|   GNU General Public License for more details.
-|
-|   You should have received a copy of the GNU General Public License
-|   along with this program; if not, write to the Free Software
-|   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-|
-________________ Copyright (C) 2009 Simon Ouellette. __________________
+| THIS FILE IS PART OF THE GEOMETRY TEMPLATE LIBRARY.
+| USE, DISTRIBUTION AND REPRODUCTION OF THIS LIBRARY SOURCE IS     
+| GOVERNED BY A BSD-STYLE SOURCE LICENSE.
+| PLEASE READ THESE TERMS BEFORE DISTRIBUTING.       
+_______________________________________________________________________
 _______________________________________________________________________
 */
 
@@ -111,14 +101,14 @@ namespace gtl
 			Vec3<Type> link_points[3];
 			double min_dist[2];
 			Vec3<Type> link_vectors[3];
-			int min_index = 0;	// index of the vertex that is the first closest one to vertex 0
+			int min_index[2] = {0};	// index of the vertex that is the first closest one to vertex 0
 
 			for (int i = 0; i < 2; i++)
 			{
 				min_dist[i] = DBL_MAX;
 				for (int j = 1; j < 8; j++)
 				{
-					if (j != min_index)
+					if (j != min_index[0])
 					{
 						Vec3<Type> vec;
 
@@ -128,7 +118,7 @@ namespace gtl
 						{
 							link_vectors[i] = vec;
 							min_dist[i] = vec.length();
-							min_index = j;
+							min_index[i] = j;
 							link_points[i] = m_vertices[j];
 						}
 					}
@@ -200,11 +190,6 @@ namespace gtl
 				pt = m_fill_points[index];
 				return 0;
 			}
-		}
-
-        //! Default destructor frees the internal list of 3D points.
-        virtual ~RectPrism()
-		{
 		}
 
 	private:
@@ -288,10 +273,33 @@ namespace gtl
 			}
 		}
 
-		template<typename elem_type>
-		void remove_duplicates(std::vector<elem_type> &vec)
+		static bool sort_operator(Vec3<Type> v1, Vec3<Type> v2)
 		{
-			std::sort(vec.begin(), vec.end());
+			if (v1.x() < v2.x())
+			{
+				return true;
+			} else if (v1.x() > v2.x()) {
+				return false;
+			} else {
+				if (v1.y() < v2.y())
+				{
+					return true;
+				} else if (v1.y() > v2.y()) {
+					return false;
+				} else {
+					if (v1.z() < v2.z())
+					{
+						return true;
+					} else {
+						return false;
+					}
+				}
+			}
+		}
+
+		void remove_duplicates(std::vector< Vec3<Type> > &vec)
+		{
+			std::sort(vec.begin(), vec.end(), sort_operator);
 			vec.erase(std::unique(vec.begin(), vec.end()), vec.end());
 		}
 	};
