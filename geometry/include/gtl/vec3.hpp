@@ -241,31 +241,6 @@ namespace gtl
             return (v1.m_xyz[0]==v2.m_xyz[0] && v1.m_xyz[1]==v2.m_xyz[1] && v1.m_xyz[2]==v2.m_xyz[2]); 
         }
 
-		//! Comparison operator for sorting
-		friend bool operator <(const Vec3<Type> & v1, const Vec3<Type> & v2)
-		{
-			if (v1.x() < v2.x())
-			{
-				return true;
-			} else if (v1.x() > v2.x()) {
-				return false;
-			} else {
-				if (v1.y() < v2.y())
-				{
-					return true;
-				} else if (v1.y() > v2.y()) {
-					return false;
-				} else {
-					if (v1.z() < v2.z())
-					{
-						return true;
-					} else {
-						return false;
-					}
-				}
-			}
-		}
-
         //! Check the two given vector for inequality. 
         friend bool operator !=(const Vec3<Type> & v1, const Vec3<Type> & v2)
         { 
