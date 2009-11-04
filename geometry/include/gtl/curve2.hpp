@@ -99,7 +99,8 @@ namespace gtl
 				delete [] m_interpol_z;
 		}
 
-		//! Reset the initial points describing the curves (pre-interpolation)
+		//! \brief Reset the initial points describing the curves (pre-interpolation)
+		//!
 		//! This one is for point arrays.
 		int setPoints(const Vec2<Type> *pts, int num_points)
 		{
@@ -115,7 +116,8 @@ namespace gtl
 			return 0;
 		}
 
-		//! Reset the initial points describing the curves (pre-interpolation)
+		//! \brief Reset the initial points describing the curves (pre-interpolation)
+		//!
 		//! This one is for point vectors.
 		int setPoints(std::vector< Vec2<Type> > &pts, int num_points)
 		{
@@ -125,8 +127,29 @@ namespace gtl
 			return 0;
 		}
 
-		//! Returns the point along the curve at position x along the x axis. Returns 0 on success,
-		//! -1 on error.
+		//! \brief Returns how many points points were used initially to declare the curve.
+		int getNumInitPoints() const
+		{
+			return (int)m_points.size();
+		}
+
+		//! \brief Puts into "point" the initial curve declaration point indexed by "index".
+		//!
+		//! returns 0 if the point exists, -1 if it doesn't.
+		int getInitPoint(int pt_index, Vec2<Type> &point) const
+		{
+			if (pt_index >= (int)m_points.size())
+			{
+				return -1;
+			} else {
+				point = m_points[pt_index];
+				return 0;
+			}
+		}
+
+		//! \brief Returns the interpolated point along the curve at position x along the x axis.
+		//! 
+		//! returns 0 on success, -1 on error.
 		int getPoint(Type x, Vec2<Type> &result) const
 		{
 			result.x() = x;
@@ -141,7 +164,7 @@ namespace gtl
 					result.y() = get_akima(x);
 					return 0;
 			}
-
+			
 			return -1;
 		}
 
@@ -177,6 +200,45 @@ namespace gtl
 			return *end_pt;
 		}
 
+		// ! \brief Establishes a chord along the curve starting a point "start_pt" of length "chord_len", and
+		// ! returns the end point of this chord in "end_pt".
+		// !
+		// ! The start_pt is the first point, along the x-axis, of the chord. So the end_pt that will be found always
+		// ! lies further along the x-axis than start_pt. If this end_pt goes past the end of the curve, an error condition
+		// ! is returned.
+		// !
+		// ! returns 0 on success, -1 on error.
+		int getChord(Vec2<Type> &start_pt, Type chord_len, Vec2<Type> &end_pt, Type precision)
+		{
+			// check if the start_pt is on the curve.
+			if (start_pt.x() < start().x() || start_pt.x() > end().x())
+			{
+				return -1;
+			}
+
+			// check if the end_pt is on the curve.
+			if ((start_pt - end()).length() < chord_len)
+			{
+				return -1;
+			}
+
+			// all seems good, now figure out the end_pt
+			Vec2<double> pt;
+			if (getPoint(start_pt.x() + chord_len, pt))
+				return -1;
+
+			while ((start_pt - pt).length() > chord_len && pt.x() > start_pt.x())
+			{
+				if (getPoint(pt.x() - precision, pt))
+					return -1;
+			}
+
+			pt.x() += precision;
+
+			end_pt = pt;
+
+			return 0;
+		}
 	private:
 		std::vector< Vec2<Type> > 	m_points;
 
@@ -189,6 +251,9 @@ namespace gtl
 
 		void init_linear(std::vector< Vec2<Type> > &pts, std::size_t num_points)
 		{
+		    if (num_points == 0)
+		        return;
+
 		    m_current_interpol = INTERPOL_LINEAR;
 
 		    if (m_interpol_x != NULL)
@@ -210,6 +275,9 @@ namespace gtl
 
 		void init_akima(std::vector< Vec2<Type> > &pts, std::size_t num_points)
 		{
+		    if (num_points == 0)
+			return;
+
 		    m_current_interpol = INTERPOL_AKIMA;
 
 		    if (m_interpol_x != NULL)
