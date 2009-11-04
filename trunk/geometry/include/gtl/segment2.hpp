@@ -59,7 +59,7 @@ namespace gtl
 			pts[0] = start_pt;
 			pts[1] = end_pt;
 
-			if (Curve2<Type>::setPoints(pts, 2))
+			if (Curve2<Type>::setPoints(pts, 2) == 0)
 			{
 				m_initial_points[0] = pts[0];
 				m_initial_points[1] = pts[1];
