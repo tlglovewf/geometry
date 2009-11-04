@@ -103,7 +103,7 @@ namespace gtl
 		//! This one is for point arrays.
 		int setPoints(const Vec2<Type> *pts, int num_points)
 		{
-			m_points.reserve(num_points);
+			m_points.resize(num_points);
 
 			for (int i = 0; i < num_points; i++)
 			{
