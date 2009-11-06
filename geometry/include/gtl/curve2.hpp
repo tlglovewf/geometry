@@ -15,16 +15,22 @@ _______________________________________________________________________
 
 #include <gtl/gtl.hpp>
 #include <gtl/vec2.hpp>
+#include <gtl/pointset2.hpp>
 
 namespace gtl
 {
 	/*!
 	  \class Curve2 curve2.hpp gtl/curve2.hpp
-	  \brief Represents a 2D curve as a collection of non-continuous 2D points
+	  \brief Represents a 2D curve as a collection of non-continuous 2D points.
+	  \
+	  \ The interpolation functionality only works if the defined curve has only 1 y value
+	  \ per x value. Otherwise, there will be undefined behaviour for all methods using interpolated
+	  \ points.
+	  \
 	  \ingroup base
 	  */
 	template<typename Type>
-	class Curve2
+	class Curve2 : public PointSet2<Type>
 	{
 	public:
 		typedef enum
@@ -39,11 +45,6 @@ namespace gtl
 		{
 			Vec2<Type> pts[2];
 
-			m_interpol_x = NULL;
-			m_interpol_y = NULL;
-			m_interpol_z = NULL;
-			m_interpol_t = NULL;
-
 			pts[0].x() = (Type)0.0;
 			pts[0].y() = (Type)0.0;
 			pts[1].x() = (Type)1.0;
@@ -56,11 +57,6 @@ namespace gtl
 		//! Constructs a curve from the provided list of 2D points.
 		Curve2(const Vec2<Type> *pts, int num_points)
 		{
-			m_interpol_x = NULL;
-			m_interpol_y = NULL;
-			m_interpol_z = NULL;
-			m_interpol_t = NULL;
-
 			if (setPoints(pts, num_points) < 0)
 				Curve2();	// if setVertices fails, construct default polyhedron...
 
@@ -74,29 +70,13 @@ namespace gtl
 			switch(type)
 			{
 				case INTERPOL_AKIMA:
-					init_akima(m_points, m_points.size());
+					init_akima(PointSet2<Type>::getPointVector(), PointSet2<Type>::getNumPoints());
 					break;
 
 				case INTERPOL_LINEAR:
-					init_linear(m_points, m_points.size());
+					init_linear(PointSet2<Type>::getPointVector(), PointSet2<Type>::getNumPoints());
 					break;
 			}
-		}
-
-		//! Default destructor frees the internal list of 2D points.
-		virtual ~Curve2()
-		{
-			if (m_interpol_x != NULL)
-				delete [] m_interpol_x;
-
-			if (m_interpol_y != NULL)
-				delete [] m_interpol_y;
-
-			if (m_interpol_t != NULL)
-				delete [] m_interpol_t;
-
-			if (m_interpol_z != NULL)
-				delete [] m_interpol_z;
 		}
 
 		//! \brief Reset the initial points describing the curves (pre-interpolation)
@@ -104,12 +84,7 @@ namespace gtl
 		//! This one is for point arrays.
 		int setPoints(const Vec2<Type> *pts, int num_points)
 		{
-			m_points.resize(num_points);
-
-			for (int i = 0; i < num_points; i++)
-			{
-				m_points[i].setValue(pts[i].x(), pts[i].y());
-			}
+			PointSet2<Type>::setPoints(pts, num_points);
 
 			setInterpol(m_current_interpol);	// re-interpolate
 
@@ -119,9 +94,10 @@ namespace gtl
 		//! \brief Reset the initial points describing the curves (pre-interpolation)
 		//!
 		//! This one is for point vectors.
-		int setPoints(std::vector< Vec2<Type> > &pts, int num_points)
+		int setPoints(std::vector< Vec2<Type> > &pts)
 		{
-			m_points = pts;
+			PointSet2<Type>::setPoints(pts);
+
 			setInterpol(m_current_interpol);	// re-interpolate
 
 			return 0;
@@ -130,19 +106,19 @@ namespace gtl
 		//! \brief Returns how many points points were used initially to declare the curve.
 		int getNumInitPoints() const
 		{
-			return (int)m_points.size();
+			return PointSet2<Type>::getNumPoints();
 		}
 
 		//! \brief Puts into "point" the initial curve declaration point indexed by "index".
 		//!
 		//! returns 0 if the point exists, -1 if it doesn't.
-		int getInitPoint(int pt_index, Vec2<Type> &point) const
+		int getInitPoint(int pt_index, Vec2<Type> &point)
 		{
-			if (pt_index >= (int)m_points.size())
+			if (pt_index >= (int)PointSet2<Type>::getNumPoints())
 			{
 				return -1;
 			} else {
-				point = m_points[pt_index];
+				point = PointSet2<Type>::getPointVector().at(pt_index);
 				return 0;
 			}
 		}
@@ -168,38 +144,6 @@ namespace gtl
 			return -1;
 		}
 
-		//! Returns a reference to the start point of the curve.
-		Vec2<Type> &start()
-		{
-			Vec2<Type> *start_pt = &m_points[0];
-
-			for (std::size_t i = 1; i < m_points.size(); i++)
-			{
-				if (m_points[i].x() < start_pt->x())
-				{
-					start_pt = &m_points[i];
-				}
-			}
-
-			return *start_pt;
-		}
-
-		//! Returns a reference to the end point of the curve.
-		Vec2<Type> &end()
-		{
-			Vec2<Type> *end_pt = &m_points[0];
-
-			for (std::size_t i = 1; i < m_points.size(); i++)
-			{
-				if (m_points[i].x() > end_pt->x())
-				{
-					end_pt = &m_points[i];
-				}
-			}
-
-			return *end_pt;
-		}
-
 		// ! \brief Establishes a chord along the curve starting a point "start_pt" of length "chord_len", and
 		// ! returns the end point of this chord in "end_pt".
 		// !
@@ -208,16 +152,16 @@ namespace gtl
 		// ! is returned.
 		// !
 		// ! returns 0 on success, -1 on error.
-		int getChord(Vec2<Type> &start_pt, Type chord_len, Vec2<Type> &end_pt, Type precision)
+		int getChord(Vec2<Type> &start_pt, Type chord_len, Vec2<Type> &end_pt, Type precision) const
 		{
 			// check if the start_pt is on the curve.
-			if (start_pt.x() < start().x() || start_pt.x() > end().x())
+			if (start_pt.x() < PointSet2<Type>::getMinX().x() || start_pt.x() > PointSet2<Type>::getMaxX().x())
 			{
 				return -1;
 			}
 
 			// check if the end_pt is on the curve.
-			if ((start_pt - end()).length() < chord_len)
+			if ((start_pt - PointSet2<Type>::getMaxX()).length() < chord_len)
 			{
 				return -1;
 			}
@@ -239,15 +183,118 @@ namespace gtl
 
 			return 0;
 		}
+
+		//! \brief Goes through all the interpolated curve points by an x increment of "precision" until
+		//! it finds the point with the minimum y value.
+		void getMinY(Vec2<Type> &pt, Type precision) const
+		{
+			Vec2<Type> start_pt, end_pt;
+			Vec2<Type> min_pt;
+
+			start_pt = PointSet2<Type>::getMinX();
+			end_pt = PointSet2<Type>::getMaxX();
+
+			min_pt = start_pt;
+			for (Type x = start_pt.x() + precision; x <= end_pt.x(); x+=precision)
+			{
+				Vec2<Type> tmp_pt;
+				if (getPoint(x, tmp_pt) < 0)
+					continue;
+
+				if (tmp_pt.y() < min_pt.y())
+					min_pt = tmp_pt;
+			}
+
+			pt = min_pt;
+		}
+
+		//! \brief Goes through all the interpolated curve points by an x increment of "precision" until
+		//! it finds the point with the maximum y value.
+		void getMaxY(Vec2<Type> &pt, Type precision) const
+		{
+			Vec2<Type> start_pt, end_pt;
+			Vec2<Type> max_pt;
+
+			start_pt = PointSet2<Type>::getMinX();
+			end_pt = PointSet2<Type>::getMaxX();
+
+			max_pt = start_pt;
+			for (Type x = start_pt.x() + precision; x <= end_pt.x(); x+=precision)
+			{
+				Vec2<Type> tmp_pt;
+				if (getPoint(x, tmp_pt) < 0)
+					continue;
+
+				if (tmp_pt.y() > max_pt.y())
+					max_pt = tmp_pt;
+			}
+
+			pt = max_pt;
+		}
+
+		//! \brief Performs a rotation and re-interpolates from the new points
+		void rotate(Vec2<Type> &pivot, Type angle)
+		{
+			PointSet2<Type>::rotate(pivot, angle);
+			setInterpol(m_current_interpol);	// re-interpolate!	
+		}
+
+		//! \brief Finds all intersection points of the two curves, between x_start and x_end inclusively.
+		void findIntersections(Curve2<Type> seg, Type precision_x, Type precision_y, Type x_start, Type x_end)
+		{
+			int intersect_pt_counter = 0;
+			m_intersect_points.clear();	// reset the list
+
+			// for all x values along the segment...
+			for (Type x = x_start; x <= x_end; x+=precision_x)
+			{
+				Vec2<Type> curve_pt;
+				Vec2<Type> seg_pt;
+
+				if (getPoint(x, curve_pt) < 0)
+					continue;
+
+				if (seg.getPoint(x, seg_pt) < 0)
+					continue;
+
+				if (curve_pt.y() + precision_y >= seg_pt.y() &&
+				    curve_pt.y() - precision_y <= seg_pt.y())
+				{
+					m_intersect_points.push_back(seg_pt);
+
+					intersect_pt_counter++;
+				}
+			}
+		}
+
+		//! \brief Returns the number of intersection points found by findIntersections.
+		unsigned int getNumIntersectPoints() const
+		{
+			return 	m_intersect_points.size();
+		}
+
+		//! \brief Returns a specific intersection point found by findIntersections.
+		//!
+		//! returns 0 on success, -1 on failure.
+		int getIntersectPoint(int pt_index, Vec2<double> &pt) const
+		{
+			if (pt_index >= (int)m_intersect_points.size())
+			{
+				return -1;
+			}
+
+			pt = m_intersect_points[pt_index];
+		}
+
 	private:
-		std::vector< Vec2<Type> > 	m_points;
+		std::vector< Vec2<Type> > m_intersect_points;	// points found by findIntersections
 
 		INTERPOL_TYPES  m_current_interpol;
 
-		double		*m_interpol_x;	// x values for the initial points
-		double		*m_interpol_y;	// y values for the initial points
-		double		*m_interpol_z;	// for akima interpolation only
-		double		*m_interpol_t;	// for akima interpolation only
+		std::vector<double> m_interpol_x;	// x values for the initial points
+		std::vector<double> m_interpol_y;	// y values for the initial points
+		std::vector<double> m_interpol_z;	// for akima interpolation only
+		std::vector<double> m_interpol_t;	// for akima interpolation only
 
 		void init_linear(std::vector< Vec2<Type> > &pts, std::size_t num_points)
 		{
@@ -256,15 +303,11 @@ namespace gtl
 
 		    m_current_interpol = INTERPOL_LINEAR;
 
-		    if (m_interpol_x != NULL)
-		        delete [] m_interpol_x;
+		    m_interpol_x.clear();
+		    m_interpol_x.resize(num_points);
 
-		    m_interpol_x = new double [num_points];
-			
-		    if (m_interpol_y != NULL)
-		        delete [] m_interpol_y;
-
-		    m_interpol_y = new double [num_points];
+		    m_interpol_y.clear();
+		    m_interpol_y.resize(num_points);
 
             	    for (std::size_t i = 0; i < num_points; ++i)
 		    {
@@ -280,25 +323,17 @@ namespace gtl
 
 		    m_current_interpol = INTERPOL_AKIMA;
 
-		    if (m_interpol_x != NULL)
-		        delete [] m_interpol_x;
-
-		    m_interpol_x = new double [num_points];
+		    m_interpol_x.clear();
+		    m_interpol_x.resize(num_points);
 			
-		    if (m_interpol_y != NULL)
-		        delete [] m_interpol_y;
-
-		    m_interpol_y = new double [num_points];
-
-		    if (m_interpol_z != NULL)
-		        delete [] m_interpol_z;
-
-		    m_interpol_z = new double [num_points];
-			
-		    if (m_interpol_t != NULL)
-		        delete [] m_interpol_t;
-
-		    m_interpol_t = new double [num_points + 3];
+		    m_interpol_y.clear();
+		    m_interpol_y.resize(num_points);
+			    
+		    m_interpol_z.clear();
+		    m_interpol_z.resize(num_points);
+			    
+		    m_interpol_t.clear();
+		    m_interpol_t.resize(num_points + 3);
 
 		    for (std::size_t i = 0; i < num_points; ++i)
 		    {
@@ -340,8 +375,16 @@ namespace gtl
 			double y = 0.0;
 			double x = (double)x_pos;
 
-			while (x > m_interpol_x[i + 1])
+			while (x > m_interpol_x[i])
 				i++;
+
+			if (i >= (int)PointSet2<Type>::getNumPoints())
+			{
+				// special case: we want the y of the last point
+				y = PointSet2<Type>::getMaxX().y();
+
+				return (Type)y;
+			}
 
 			a = (x - m_interpol_x[i - 1]) / (m_interpol_x[i] - m_interpol_x[i - 1]);
 
@@ -370,7 +413,7 @@ namespace gtl
 
 			return (Type)y;
 		}
-};
+	};
 
 typedef Curve2<int>    Curve2i;
 typedef Curve2<float>  Curve2f;
