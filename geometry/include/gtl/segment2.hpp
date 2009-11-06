@@ -22,6 +22,11 @@ namespace gtl
 	/*!
 	  \class Segment2 segment2.hpp gtl/segment2.hpp
 	  \brief Represents a 2D line segment as a special case of a curve that is declared from 2 2D points.
+	  \
+	  \ Because this class derives from curve2, the same limitation applies for the interpolation functionality:
+	  \ if your line segment is a perfectly vertical line, you will have undefined behaviour where interpolated points
+	  \ are used.
+	  \
 	  \ingroup base
 	  */
 	template<typename Type>
@@ -73,11 +78,9 @@ namespace gtl
 		//! \brief Returns the distance from the specified point to the line extended from this line segment.
 		Type getDistance(Vec2<Type> point)
 		{
-			Type y, m, x, b;	// variables of the line equation
+			Type m, b;	// variables of the line equation
 			Type distance;
 
-			y = m_initial_points[0].y();
-			x = m_initial_points[0].x();
 			getEquation(m_initial_points[0], m_initial_points[1], m, b);
 
 			distance = (Type)(fabs( ((double)m * (double)point.x()) - point.y() + b ) / (double) sqrt( SQR(m) + 1.0 ));
@@ -89,6 +92,7 @@ namespace gtl
 		static void getEquation(Vec2<Type> &pt1, Vec2<Type> &pt2, Type &m, Type &b)
 		{
 			m = (Type)((double)(pt1.y() - pt2.y()) / (double)(pt1.x() - pt2.x()));
+
 			b = pt1.y() - (m * pt1.x());
 		}
 
