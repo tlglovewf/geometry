@@ -43,9 +43,6 @@ namespace gtl
 			pts[1].x() = (Type)1.0;
 			pts[1].y() = (Type)1.0;
 
-			m_initial_points[0] = pts[0];
-			m_initial_points[1] = pts[1];
-
 			Curve2<Type>::setPoints(pts, 2);
 		}
 
@@ -66,26 +63,61 @@ namespace gtl
 
 			if (Curve2<Type>::setPoints(pts, 2) == 0)
 			{
-				m_initial_points[0] = pts[0];
-				m_initial_points[1] = pts[1];
-
 				return 0;
 			} else {
 				return -1;	
 			}
 		}
 
+		//! \brief Reset the segment from a starting point, a direction vector and a length.
+		void setValue(Vec2<Type> &start_pt, Vec2<Type> dir_vec, Type length)
+		{
+			Vec2<Type> pts[2];
+			
+			dir_vec.normalize();
+
+			dir_vec *= length;
+
+			pts[0] = start_pt;
+			pts[1] = start_pt + dir_vec;
+
+			Curve2<Type>::setPoints(pts, 2);
+		}
+
+		//! \brief Returns the absolute distance between 2 points
+		static Type getPtDistance(Vec2<Type> pt1, Vec2<Type> pt2)
+		{
+			double distance;
+
+			distance = sqrt(SQR(pt1.y() - pt2.y()) + SQR(pt1.x() - pt2.x()));
+
+			return (Type)distance;
+		}
+
 		//! \brief Returns the distance from the specified point to the line extended from this line segment.
 		Type getDistance(Vec2<Type> point)
 		{
-			Type m, b;	// variables of the line equation
-			Type distance;
+			double distance;
+			Vec2<Type> intersect;
+			double u;
+			Vec2<double> pt1, pt2;
+			Curve2<Type>::getInitPoint(0, pt1);
+			Curve2<Type>::getInitPoint(1, pt2);
 
-			getEquation(m_initial_points[0], m_initial_points[1], m, b);
+			u = ((point.x() - pt1.x()) * (pt2.x() - pt1.x())
+				+
+			    (point.y() - pt1.y()) * (pt2.y() - pt1.y()))
+			        /
+			    (SQR(getPtDistance(pt1, pt2)));
 
-			distance = (Type)(fabs( ((double)m * (double)point.x()) - point.y() + b ) / (double) sqrt( SQR(m) + 1.0 ));
+			double x = pt1.x() + (u * (pt2.x() - pt1.x()));
+			double y = pt1.y() + (u * (pt2.y() - pt1.y()));
 
-			return distance;
+			intersect.setValue(x, y);
+
+			distance = getPtDistance(intersect, point);
+
+			return (Type)distance;
 		}
 
 		//! \brief Returns the equation of a line in the form y = mx + b, given two 2D points.
@@ -99,11 +131,12 @@ namespace gtl
 		//! \brief Returns the length of the line segment.
 		Type length()
 		{
-			return (m_initial_points[0] - m_initial_points[1]).length();
-		}
+			Vec2<double> pt1, pt2;
+			Curve2<Type>::getInitPoint(0, pt1);
+			Curve2<Type>::getInitPoint(1, pt2);
 
-	protected:
-		Vec2<Type>	m_initial_points[2];	// the 2 initial points from which this line was declared
+			return (pt2 - pt1).length();
+		}
 	};
 
 	typedef Segment2<int>    Segment2i;
